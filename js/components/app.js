@@ -6,7 +6,7 @@ const vm = new Vue({
     carrinho: [],
     mensagemAlerta: 'Item Adicionado',
     alertaAtivo: false,
-    carrinhoAtivo: true,
+    carrinhoAtivo: false,
   },
   filters: {
     // atraves do | numeroPreco, aplica o retorno na varial
@@ -87,6 +87,20 @@ const vm = new Vue({
         this.carrinho = JSON.parse(window.localStorage.carrinho);
       }
     },
+    //Faz o filter por cada item e IF o item.id ja existir 
+    compararEstoque(){
+      //O .FILTER retorna UM LISTA com penas o que for TRUE
+        //Verifica o ID de cada item
+      const items = this.carrinho.filter(item => {
+        console.log(item.id)
+        //IF se o item do produto selecionado for igual ao id do produto dentro do carrinho, returna true;
+        if(item.id === this.produto.id){
+          return true;
+        }
+      })
+      //Remove do estoque, fazendo produto.estoque - produtos dentro do carrinho(retornados com true)
+      this.produto.estoque = this.produto.estoque - items.length;
+    },
     //Exibe a msg de alerta por 1.5seg e retorna para false
     alerta(mensagem){
       this.mensagemAlerta = mensagem;
@@ -114,6 +128,10 @@ const vm = new Vue({
       document.title = this.produto.nome || "Techno";
       const hash = this.produto.id || "";
       history.pushState(null, null, `#${hash}`);
+      //Se existir algum produto, execura o methods compararEstoque();
+      if(this.produto){
+        this.compararEstoque();
+      }
     },
   },
   // faz o fetch do JSON produtos ao ser criado, antes do MOUNT

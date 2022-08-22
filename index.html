@@ -16,7 +16,8 @@
         <header class="header">
             <img class="logo" src="./assets/techno.svg" alt="Techno">
             <!-- CARRINHO -->
-            <div class="carrinho_menu">
+            <!-- Ao click torna a variavel carrinhoAtivo em true, e abre o modal do carrinho -->
+            <div class="carrinho_menu" @click="carrinhoAtivo = true">
                 <!-- Valor total somando no loop carrinhoTotal() e quantidade de itens no carrinho -->
                 {{carrinhoTotal | numeroPreco}} | {{carrinho.length}}  
             </div>
@@ -65,20 +66,30 @@
                 </div>
             </div>
         </section>
-
+        <!-- MODAL DO CARRINHO -->
+        <!-- No :class="{ativo: carrinhoAtivo} ao add/remover a classe ativo, altera-se o valor
+        boleano da variavel carrinhoAtivo
+        E o @click="clickForaCarrinho" executa o methods clickForaCarrinho -->
         <section class="carrinho_modal" :class="{ativo: carrinhoAtivo}" @click="clickForaCarrinho">
             <div class="carrinho_container">
+                <!-- Muda a variavel carrinhoAtivo para false, assim fecha o modal do carrinho -->
                 <button class="carrinho_fechar" @click="carrinhoAtivo = false">X</button>
                 <h2 class="carrinho_titulo">Carrinho</h2>
-                <div>
+                <!-- SE HOUVER ITENS NO CARRINHO -->
+                <div v-if="carrinho.length > 0">
                     <ul class="carrinho_lista">
+                        <!-- Faz loop pelos itens no carrinho, e remove atraves do index -->
                         <li class="carrinho_item" v-for="(item, index) in carrinho">
                             <p>{{item.nome}}</p>
                             <p class="carrinho_preco">{{item.preco | numeroPreco}}</p>
                             <button class="carrinho_remover" @click="removerItem(index)">X</button>
                         </li>
                     </ul>
+                    <p class="carrinho_total">{{carrinhoTotal | numeroPreco}}</p>
+                    <button class="carrinho_finalizar">Finalizar Compra</button>
                 </div>
+                <!-- SE NÃO HOUVER ITENS NO CARRINHO -->
+                <p v-else>O carrinho esta vazio</p>
             </div>
         </section>
 
