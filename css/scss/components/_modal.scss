@@ -87,7 +87,6 @@
         }
         
     }
-    
 }
 
 @keyframes fadeIn{
@@ -97,6 +96,38 @@
     }
     to{
         opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+// ALERT
+.alerta{
+    position: absolute;
+    top:20px;
+    left:0px;
+    z-index: 10;
+    width: 100%;
+    text-align: center;
+    display: none;
+    &.ativo{
+        display: block;
+        animation: fadeInDown 0.3s forwards;
+    }
+    .alerta_mensagem{
+        background: #fff;
+        display: inline-block;
+        padding:20px 40px;
+        border:2px solid #000;
+        @include box-shadow(0px 3px 4px rgba(0,0,0,0.6), 0px 4px 15px rgba(0,0,0,0.8));
+    }
+}
+@keyframes fadeInDown {
+    from{
+        opacity:0;
+        transform: translate3d(0, -30px, 0);
+    }
+    to{
+        opacity:1;
         transform: translate3d(0, 0, 0);
     }
 }

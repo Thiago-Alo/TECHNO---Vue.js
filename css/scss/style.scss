@@ -1,6 +1,7 @@
-@import './components/reset';
+@import './components/reset.scss';
 @import './components/variaveis_mixins.scss';
 @import './components/geral.scss';
-@import './components/header';
+@import './components/header.scss';
 @import './components/produtos.scss';
-@import './components/modal';
+@import './components/modal.scss';
+@import './components/carrinho_modal.scss';

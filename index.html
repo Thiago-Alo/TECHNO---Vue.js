@@ -18,15 +18,8 @@
             <!-- CARRINHO -->
             <div class="carrinho_menu">
                 <!-- Valor total somando no loop carrinhoTotal() e quantidade de itens no carrinho -->
-                {{carrinhoTotal | numeroPreco}} | {{carrinho.length}}
+                {{carrinhoTotal | numeroPreco}} | {{carrinho.length}}  
             </div>
-            <!-- REMOVE ITEM DO CARRINHO atraves do INDEX em @click="removerItem(index)"-->
-            <ul>
-                <li v-for="(item, index) in carrinho">
-                    <p>{{item.nome}}</p>
-                    <button @click="removerItem(index)">X</button>
-                </li>
-            </ul>
         </header>
         
 
@@ -72,6 +65,29 @@
                 </div>
             </div>
         </section>
+
+        <section class="carrinho_modal" :class="{ativo: carrinhoAtivo}" @click="clickForaCarrinho">
+            <div class="carrinho_container">
+                <button class="carrinho_fechar" @click="carrinhoAtivo = false">X</button>
+                <h2 class="carrinho_titulo">Carrinho</h2>
+                <div>
+                    <ul class="carrinho_lista">
+                        <li class="carrinho_item" v-for="(item, index) in carrinho">
+                            <p>{{item.nome}}</p>
+                            <p class="carrinho_preco">{{item.preco | numeroPreco}}</p>
+                            <button class="carrinho_remover" @click="removerItem(index)">X</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alerta exibido ao adicionar items ao carrinho -->
+        <!-- o :class="{ativo: alertaAtivo}" altera o TRUE/FALSE da variavel alertaAtivo,
+         ao add e ao remover a classe Ativo -->
+        <div class="alerta" :class="{ativo: alertaAtivo}">
+            <p class="alerta_mensagem">{{mensagemAlerta}}</p>
+        </div>
    </div>
 
     <script src="./js/script.js"></script>
