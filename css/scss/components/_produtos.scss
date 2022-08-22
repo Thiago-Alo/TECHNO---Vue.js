@@ -1,21 +1,41 @@
 .produtos{
     max-width: 900px;
     margin: 100px auto 0 auto;
+    @include device(l){
+        margin-top: 40px;
+    }
     cursor: pointer;
     .produto{
         display: flex;
         align-items: center;
         margin-bottom: 40px;
         background: #fff;
-        @include box-shadow(0 0 2rem rgba(0,0,0,0.1))
+        @include box-shadow(0 0 2rem rgba(0,0,0,0.1));
+        @include device(l){
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 300px;
+            margin:30px auto;
+        }
+    }
+    .produto_info{
+        @include device(l){
+            padding:20px;
+        }
     }
     .produto_img{
         max-width: 300px;
         margin-right: 40px;
+        @include device(l){
+            max-width: 100%;
+        }
     }
     .produto_titulo{
         font-size:3rem;
         line-height: 1;
+        @include device(l){
+            font-size: 1.5rem;
+        }
     }
     .produtp_preco{
         color:rgba(0,0,0,0.5);

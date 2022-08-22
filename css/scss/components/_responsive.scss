@@ -1,0 +1,15 @@
+@mixin device($size){
+    @if($size == l){
+        @media screen and (max-width: 900px){
+            @content;
+        }
+    } @else if($size == t){
+        @media screen and (min-width: 760px) and (max-width: 899px) {
+            @content;
+        }
+    } @else if ($size == m){
+        @media screen and (max-width: 759px){
+            @content;
+        }
+    }
+}
