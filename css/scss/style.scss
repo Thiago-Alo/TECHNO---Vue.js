@@ -1,1 +1,6 @@
-@import './teste.scss'
+@import './components/reset';
+@import './components/variaveis_mixins.scss';
+@import './components/geral.scss';
+@import './components/header';
+@import './components/produtos.scss';
+@import './components/modal';

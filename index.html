@@ -6,11 +6,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Techno Store</title>
     <script src="Vue/vue.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
    <div id="app">
-   {{produtos}}
+        <header class="header">
+            <img class="logo" src="./assets/techno.svg" alt="Techno">
+            <!-- CARRINHO -->
+            <div class="carrinho_menu">
+                <!-- Valor total somando no loop carrinhoTotal() e quantidade de itens no carrinho -->
+                {{carrinhoTotal | numeroPreco}} | {{carrinho.length}}
+            </div>
+            <!-- REMOVE ITEM DO CARRINHO atraves do INDEX em @click="removerItem(index)"-->
+            <ul>
+                <li v-for="(item, index) in carrinho">
+                    <p>{{item.nome}}</p>
+                    <button @click="removerItem(index)">X</button>
+                </li>
+            </ul>
+        </header>
+        
+
+        <section class="produtos">
+            <!-- V-FOR dos produtos e identificação unica de cada produto em :KEY -->
+            <div v-for="item in produtos" @click="abrirModal(item.id)" :key="item.id" class="produto">
+                <!-- OBS: o src da IMG não é o caminho, mas a propriedade .img do produto -->
+                <img v-bind:src="item.img" class="produto_img" alt="item.nome">
+                <div class="produto_info">
+                    <!-- O | é o filters -->
+                    <span class="produto_preco">{{item.preco | numeroPreco}}</span>
+                    <h2 class="produto_titulo">{{item.nome}}</h2>
+                </div>
+            </div>
+        </section>
+        <!-- MODAL -->
+        <section class="modal" v-if="produto" @click="fecharModal">
+            <div class="modal_container">
+                <div class="modal_img">
+                <!-- OBS: o src da IMG não é o caminho, mas a propriedade .img do produto -->
+                    <img :src="produto.img" :alt="produto.nome">
+                </div>
+                <div class="modal_dados">
+                    <!-- botao de FECHAR MODAL no @click="produto = !produto" -->
+                    <button class="modal_fechar" @click="produto = !produto">X</button>
+                    <span class="modal_preco">{{produto.preco | numeroPreco}}</span>
+                    <h2 class="modal_titulo">{{produto.nome}}</h2>
+                    <p>{{produto.descricao}}</p>
+                    <p>Produtos dísponiveis: {{produto.estoque}}</p>
+                    <!-- V-IF para o BOTAO que controla o estoque -->
+                    <button v-if="produto.estoque > 0" class="modal_btn" @click="adicionarItem">Adicionar Item</button>
+                    <button v-else class="modal_btn esgotado" disabled aria-disabled="">Produto Esgotado</button>
+                </div>
+                <div class="avaliacoes">
+                    <!-- AVALIAÇÕES / REVIEWS -->
+                    <h2 class="avaliacoes_subtitulo">Avaliações</h2>
+                    <ul>
+                        <li v-for="avaliacao in produto.avaliacoes" class="avaliacao">
+                            <p class="avaliacao_descricao">{{avaliacao.descricao}}</p>
+                            <p class="avaliacao_usuario">{{avaliacao.nome}} | {{avaliacao.estrelas}} estrelas</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
    </div>
 
     <script src="./js/script.js"></script>
